@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 
 from .forms import LoginForm, SignupForm
 
@@ -22,7 +23,7 @@ def signup(request):
 		form = SignupForm(request.POST)
 
 		if form.is_valid():
-			return render(request, 'meu_condominio/index.html')
+			return HttpResponseRedirect(reverse('mc-login'))
 	else:
 		form = SignupForm()
 

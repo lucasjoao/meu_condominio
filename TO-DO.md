@@ -1,6 +1,5 @@
 to-do:
 - iteração 1
-	- redirecionar para a página de login após o cadastro
 	- fazer lógica do banco para signup
 	- fazer lógica do banco para login
 	- fazer tela de mudança de senha
