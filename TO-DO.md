@@ -1,8 +1,26 @@
 to-do:
-- index.html
-    - imagem no lugar do fundo azul
-    - arrumar todos os links
-    - e-mail wesley
-- fazer página de login
-- fazer página de cadastro
-- fazer mudança de senha no primeiro acesso
+- iteração 1
+	- redirecionar para a página de login após o cadastro
+	- fazer lógica do banco para signup
+	- fazer lógica do banco para login
+	- fazer tela de mudança de senha
+	- fazer mudança de senha após o primeiro acesso
+		- testar com usuário no banco
+	- decidir como apresentar
+
+- melhorias
+	- index.html
+	    - imagem no lugar do fundo azul
+	- login.html
+		- add fundo
+		- botar para baixo
+		- mensagens em pt-br
+		- verificar necessidade de mais atributos
+	- signup.html
+		- add fundo
+		- botar para baixo
+		- mensagens em pt-br
+		- verificar necessidade de mais atributos
+		- add validação para baixo no nro de apartamentos
+		- add validação específica cpf
+		- add validação específica cep
