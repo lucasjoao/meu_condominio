@@ -1,11 +1,9 @@
 to-do:
 - iteração 1
-	- fazer tela de mudança de senha
-	- fazer mudança de senha após o primeiro acesso
-		- testar com usuário no banco
 	- decidir como apresentar
 - iteração 2
-	- associar usuário a um condomínio e realizar login dessa forma
+	- fazer, quando necessário, aparecer a id do usuário na url
+		- associar usuário a um condomínio e realizar login dessa forma
 	- fazer um usuário aprimorado com mais atributos
 - melhorias
 	- index.html

@@ -36,3 +36,9 @@ class SignupForm(forms.Form):
 						   widget=forms.TextInput(
 						   		attrs={'placeholder':'CEP'}
 						  ))
+
+class UpdateForm(forms.Form):
+	password = forms.CharField(label='Sua nova senha', min_length=8,
+						       widget=forms.PasswordInput(
+								   attrs={'placeholder':'Senha'}
+							   ))
