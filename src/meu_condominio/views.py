@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib import messages
+from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 
 from .forms import LoginForm, SignupForm
@@ -13,9 +14,14 @@ def index(request):
 def login(request):
 	if request.method == 'POST':
 		form = LoginForm(request.POST)
+		user = authenticate(username=request.POST['nome'],
+							password=request.POST['password']
+							)
 
-		if form.is_valid():
+		if form.is_valid() and user is not None:
 			return HttpResponse('Em construcao')
+		else:
+			messages.warning(request, 'Nome e/ou senha incorretos!')
 	else:
 		form = LoginForm()
 

@@ -1,6 +1,5 @@
 to-do:
 - iteração 1
-	- fazer lógica do banco para login
 	- fazer tela de mudança de senha
 	- fazer mudança de senha após o primeiro acesso
 		- testar com usuário no banco
@@ -25,3 +24,4 @@ to-do:
 		- add validação específica cpf
 		- add validação específica cep
 	- necessidade de mensagens em pop-ups
+	- mudar autenticação para e-mail
