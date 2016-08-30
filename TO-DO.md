@@ -1,12 +1,13 @@
 to-do:
 - iteração 1
-	- fazer lógica do banco para signup
 	- fazer lógica do banco para login
 	- fazer tela de mudança de senha
 	- fazer mudança de senha após o primeiro acesso
 		- testar com usuário no banco
 	- decidir como apresentar
-
+- iteração 2
+	- associar usuário a um condomínio e realizar login dessa forma
+	- fazer um usuário aprimorado com mais atributos
 - melhorias
 	- index.html
 	    - imagem no lugar do fundo azul
@@ -23,3 +24,4 @@ to-do:
 		- add validação para baixo no nro de apartamentos
 		- add validação específica cpf
 		- add validação específica cep
+	- necessidade de mensagens em pop-ups

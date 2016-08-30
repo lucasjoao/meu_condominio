@@ -16,10 +16,6 @@ class SignupForm(forms.Form):
 						   widget=forms.TextInput(
 						   		attrs={'placeholder':'Nome'}
 							))
-	cpf = forms.CharField(label='Seu CPF',
-						  widget=forms.TextInput(
-						   		attrs={'placeholder':'CPF'}
-						  ))
 	email = forms.EmailField(label='Seu e-mail:',
 		                     widget=forms.TextInput(
 		                     	attrs={'placeholder':'E-mail'}
