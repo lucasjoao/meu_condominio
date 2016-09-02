@@ -1,23 +1,18 @@
 to-do:
 - iteração 2
-	- fazer, quando necessário, aparecer a id do usuário na url
-		- associar usuário a um condomínio e realizar login dessa forma
+	- arrumar formulários
+		- botão de cancelar
+		- add borda
+		- add fundo
+		- add título
+		- add mensagens quando necessário
+	- django em pt-br?
+  - imagem no lugar do fundo azul da primeira página
+	- colocar logout
+	- associar usuário a um condomínio e realizar login dessa forma
 	- fazer um usuário aprimorado com mais atributos
-- melhorias
-	- index.html
-	    - imagem no lugar do fundo azul
-	- login.html
-		- add fundo
-		- botar para baixo
-		- mensagens em pt-br
-		- verificar necessidade de mais atributos
-	- signup.html
-		- add fundo
-		- botar para baixo
-		- mensagens em pt-br
-		- verificar necessidade de mais atributos
+	- validações?
 		- add validação para baixo no nro de apartamentos
 		- add validação específica cpf
 		- add validação específica cep
-	- necessidade de mensagens em pop-ups
 	- mudar autenticação para e-mail
