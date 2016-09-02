@@ -51,6 +51,7 @@ def signup(request):
                cep=request.POST['cep']
                )
       c.save()
+      messages.success(request, 'Cadastro realizado com sucesso!')
       return HttpResponseRedirect(reverse('mc-login'))
   else:
     form = SignupForm()

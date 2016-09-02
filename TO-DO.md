@@ -1,18 +1,10 @@
 to-do:
 - iteração 2
-	- arrumar formulários
-		- botão de cancelar
-		- add borda
-		- add fundo
-		- add título
-		- add mensagens quando necessário
-	- django em pt-br?
-  - imagem no lugar do fundo azul da primeira página
 	- colocar logout
 	- associar usuário a um condomínio e realizar login dessa forma
 	- fazer um usuário aprimorado com mais atributos
 	- validações?
-		- add validação para baixo no nro de apartamentos
-		- add validação específica cpf
-		- add validação específica cep
+	- add validação para baixo no nro de apartamentos
+	- add validação específica cpf
+	- add validação específica cep
 	- mudar autenticação para e-mail
