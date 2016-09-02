@@ -15,8 +15,8 @@ def login(request):
 	if request.method == 'POST':
 		form = LoginForm(request.POST)
 		user = authenticate(username=request.POST['nome'],
-							password=request.POST['password']
-							)
+		                    password=request.POST['password']
+		                    )
 
 		if form.is_valid() and user is not None:
 			if user.is_superuser == False:
@@ -25,7 +25,9 @@ def login(request):
 													args=(user.pk,)
 												    ))
 			else:
-				return HttpResponse('Em construcao')
+				return HttpResponseRedirect(reverse('mc-home',
+					                                args=(user.pk,)
+				                                    ))
 		else:
 			messages.warning(request, 'Nome e/ou senha incorretos!')
 	else:
@@ -63,8 +65,13 @@ def update(request, id):
 			user = User.objects.get(pk=id)
 			user.set_password(request.POST['password'])
 			user.save()
-			return HttpResponse('Senha alterada. Em construcao')
+			return HttpResponseRedirect(reverse('mc-home',
+					                                args=(user.pk,)
+				                                    ))
 	else:
 		form = UpdateForm()
 
 	return render(request, 'meu_condominio/update.html', {'form' : form})
+
+def home(request, id):
+	return render(request, 'meu_condominio/home.html')

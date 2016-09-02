@@ -1,6 +1,4 @@
 to-do:
-- iteração 1
-	- decidir como apresentar
 - iteração 2
 	- fazer, quando necessário, aparecer a id do usuário na url
 		- associar usuário a um condomínio e realizar login dessa forma
