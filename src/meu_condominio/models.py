@@ -4,7 +4,7 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 
 @python_2_unicode_compatible
-class Cond(models.Model):
+class Condominio(models.Model):
 	nome_condominio = models.CharField(max_length=100)
 	nro_apartamentos = models.IntegerField()
 	cep = models.CharField(max_length=8)

@@ -2,11 +2,11 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib import messages
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, logout
 from django.contrib.auth.models import User
 
 from .forms import LoginForm, SignupForm, UpdateForm
-from .models import Cond
+from .models import Condominio
 
 def index(request):
   return render(request, 'meu_condominio/index.html')
@@ -76,3 +76,7 @@ def update(request, id):
 
 def home(request, id):
   return render(request, 'meu_condominio/home.html')
+
+def logout_view(request):
+  logout(request)
+  return HttpResponseRedirect(reverse('mc-index'))
