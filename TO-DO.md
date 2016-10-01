@@ -3,12 +3,13 @@ to-do:
 	- associar usuário a um condomínio e realizar login dessa forma
 	- fazer um usuário aprimorado com mais atributo
 	- cadastrar moradores
+		- alterar senha somente uma vez
 	- cadastrar funcionários
-	- alterar senha somente uma vez
-	- extra
-		- validações?
-		- add validação para baixo no nro de apartamentos
-		- add validação específica cpf
-		- add validação específica cep
-		- mudar autenticação para e-mail
-		- não permitir acesso se não estiver autenticado
+	- testar tudo antes de dizer que está pronto
+- extra
+	- validações?
+	- add validação para baixo no nro de apartamentos
+	- add validação específica cpf
+	- add validação específica cep
+	- mudar autenticação para e-mail
+	- não permitir acesso se não estiver autenticado

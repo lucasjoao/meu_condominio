@@ -21,13 +21,9 @@ def login(request):
     if form.is_valid() and user is not None:
       if user.is_superuser == False:
         form = UpdateForm()
-        return HttpResponseRedirect(reverse('mc-update',
-                                    args=(user.pk,)
-                                    ))
+        return HttpResponseRedirect(reverse('mc-update'), args=(user.pk))
       else:
-        return HttpResponseRedirect(reverse('mc-home',
-                                            args=(user.pk,)
-                                            ))
+        return HttpResponseRedirect(reverse('mc-home'))
     else:
       messages.warning(request, 'Nome e/ou senha incorretos!')
   else:
@@ -46,10 +42,10 @@ def signup(request):
                                    )
       u.is_superuser = True
       u.save()
-      c = Cond(nome_condominio=request.POST['nome_condominio'],
-               nro_apartamentos=int(request.POST['nro_apartamentos']),
-               cep=request.POST['cep']
-               )
+      c = Condominio(nome_condominio=request.POST['nome_condominio'],
+                    nro_apartamentos=int(request.POST['nro_apartamentos']),
+                    cep=request.POST['cep']
+                    )
       c.save()
       messages.success(request, 'Cadastro realizado com sucesso!')
       return HttpResponseRedirect(reverse('mc-login'))
@@ -66,17 +62,21 @@ def update(request, id):
       user = User.objects.get(pk=id)
       user.set_password(request.POST['password'])
       user.save()
-      return HttpResponseRedirect(reverse('mc-home',
-                                          args=(user.pk,)
-                                          ))
+      return HttpResponseRedirect(reverse('mc-home'))
   else:
     form = UpdateForm()
 
   return render(request, 'meu_condominio/update.html', {'form' : form})
 
-def home(request, id):
+def home(request):
   return render(request, 'meu_condominio/home.html')
 
 def logout_view(request):
   logout(request)
   return HttpResponseRedirect(reverse('mc-index'))
+
+def financas(request):
+  return render(request, 'meu_condominio/financas.html')
+
+def espacos(request):
+  return render(request, 'meu_condominio/espacos.html')
