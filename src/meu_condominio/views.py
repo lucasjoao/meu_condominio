@@ -116,11 +116,19 @@ def f_add(request):
                         salario=request.POST['salario'])
         f.save()
         messages.success(request, 'Funcionário adicionado com sucesso!')
-        return HttpResponseRedirect(reverse('mc-funcionarios'))
+        return HttpResponseRedirect(reverse('mc-f_view'))
     else:
       form = F_addForm()
 
     return render(request, 'meu_condominio/funcionarios/f_add.html',
                   {'form' : form})
+  else:
+    return HttpResponseRedirect(reverse('mc-login'))
+
+def f_view(request):
+  if request.user.is_authenticated:
+    funcionarios = Funcionario.objects.all()
+    return render(request, 'meu_condominio/funcionarios/f_view.html',
+                  {'funcionarios' : funcionarios})
   else:
     return HttpResponseRedirect(reverse('mc-login'))

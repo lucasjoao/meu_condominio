@@ -13,4 +13,5 @@ urlpatterns = [
   url(r'^espacos/$', views.espacos, name='mc-espacos'),
   url(r'^funcionarios/$', views.funcionarios, name='mc-funcionarios'),
   url(r'^funcionarios/f_add$', views.f_add, name='mc-f_add'),
+  url(r'^funcionarios/f_view$', views.f_view, name='mc-f_view'),
 ]

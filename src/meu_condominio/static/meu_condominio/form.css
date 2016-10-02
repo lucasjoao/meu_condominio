@@ -27,4 +27,7 @@ ul
   padding: 2.5em 2em 0;
   background-color: #1f8dd6;
 }
+table, th, tr {
+  text-align: center;
+}
 
