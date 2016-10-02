@@ -97,3 +97,15 @@ def espacos(request):
     return render(request, 'meu_condominio/espacos.html')
   else:
     return HttpResponseRedirect(reverse('mc-login'))
+
+def funcionarios(request):
+  if request.user.is_authenticated:
+    return render(request, 'meu_condominio/funcionarios.html')
+  else:
+    return HttpResponseRedirect(reverse('mc-login'))
+
+def f_add(request):
+  if request.user.is_authenticated:
+    return render(request, 'meu_condominio/funcionarios/f_add.html')
+  else:
+    return HttpResponseRedirect(reverse('mc-login'))

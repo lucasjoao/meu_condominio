@@ -1,0 +1,71 @@
+{% load static %}
+
+<!doctype html>
+<html>
+<head>
+
+<meta charset="utf-8">
+<title>Funcionários - Meu Condomínio</title>
+
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+<link rel="stylesheet" href="{% static 'meu_condominio/side-menu.css' %}">
+
+</head>
+
+<body>
+
+<div id="layout">
+  <!-- Menu toggle -->
+  <a href="#menu" id="menuLink" class="menu-link">
+    <span></span>
+  </a>
+
+  <div id="menu">
+    <div class="pure-menu">
+      <a class="pure-menu-heading" href="../home">Meu Condomínio</a>
+
+      <ul class="pure-menu-list">
+        <li class="pure-menu-item">
+          <a href="../financas" class="pure-menu-link">Finanças</a>
+        </li>
+        <li class="pure-menu-item">
+          <a href="../espacos" class="pure-menu-link">Espaços</a>
+        </li>
+        <li class="pure-menu-item">
+          <a href="../funcionarios" class="pure-menu-link">Funcionários</a>
+        </li>
+        <li class="pure-menu-item">
+          <a href="../moradores" class="pure-menu-link">Moradores</a>
+        </li>
+        <li class="pure-menu-item">
+          <a href="{% url 'mc-logout' %}" class="pure-menu-link">Sair</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="main">
+    <div class="header">
+      <h1>Funcionários</h1>
+    </div>
+
+    <div class="content">
+      <h2 class="content-subhead">Opções:</h2>
+      <p>
+        <ul>
+          <li>
+            <a href="f_add" class="puer-menu-link">
+              Cadastrar um novo funcionário
+            </a>
+          </li>
+          <li>Visualizar todos funcionários cadastrados</li>
+        </ul>
+      </p>
+    </div>
+  </div>
+</div>
+
+<script src="{% static 'meu_condominio/ui.js' %}"></script>
+
+</body>
+</html>

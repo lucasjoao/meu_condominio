@@ -10,5 +10,7 @@ urlpatterns = [
 	url(r'^home/$', views.home, name='mc-home'),
   url(r'^logout/$', views.logout_view, name='mc-logout'),
   url(r'^financas/$', views.financas, name='mc-financas'),
-  url(r'^espacos/$', views.espacos, name='mc-espacos')
+  url(r'^espacos/$', views.espacos, name='mc-espacos'),
+  url(r'^funcionarios/$', views.funcionarios, name='mc-funcionarios'),
+  url(r'^funcionarios/f_add$', views.f_add, name='mc-f_add'),
 ]
