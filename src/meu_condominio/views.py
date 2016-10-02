@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth import authenticate, logout
+from django.contrib.auth import login as auth_login
 from django.contrib.auth.models import User
 
 from .forms import LoginForm, SignupForm, UpdateForm
@@ -21,9 +22,11 @@ def login(request):
     if form.is_valid() and user is not None:
       if user.is_superuser == False:
         form = UpdateForm()
-        return HttpResponseRedirect(reverse('mc-update'), args=(user.pk))
+        return HttpResponseRedirect(reverse('mc-update'))
       else:
-        return HttpResponseRedirect(reverse('mc-home'))
+        auth_login(request, user)
+        return render(request, 'meu_condominio/home.html',
+                      {'nome' : user.username})
     else:
       messages.warning(request, 'Nome e/ou senha incorretos!')
   else:
@@ -62,6 +65,10 @@ def update(request, id):
       user = User.objects.get(pk=id)
       user.set_password(request.POST['password'])
       user.save()
+      user = authenticate(username=user.username,
+                          password=user.password
+                          )
+      auth_login(request, user)
       return HttpResponseRedirect(reverse('mc-home'))
   else:
     form = UpdateForm()
@@ -69,14 +76,24 @@ def update(request, id):
   return render(request, 'meu_condominio/update.html', {'form' : form})
 
 def home(request):
-  return render(request, 'meu_condominio/home.html')
+  if request.user.is_authenticated:
+    return render(request, 'meu_condominio/home.html',
+                  {'nome' : request.user.username})
+  else:
+    return HttpResponseRedirect(reverse('mc-login'))
 
 def logout_view(request):
   logout(request)
   return HttpResponseRedirect(reverse('mc-index'))
 
 def financas(request):
-  return render(request, 'meu_condominio/financas.html')
+  if request.user.is_authenticated:
+    return render(request, 'meu_condominio/financas.html')
+  else:
+    return HttpResponseRedirect(reverse('mc-login'))
 
 def espacos(request):
-  return render(request, 'meu_condominio/espacos.html')
+  if request.user.is_authenticated:
+    return render(request, 'meu_condominio/espacos.html')
+  else:
+    return HttpResponseRedirect(reverse('mc-login'))

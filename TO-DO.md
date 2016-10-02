@@ -12,4 +12,3 @@ to-do:
 	- add validação específica cpf
 	- add validação específica cep
 	- mudar autenticação para e-mail
-	- não permitir acesso se não estiver autenticado
