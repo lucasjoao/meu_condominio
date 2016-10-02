@@ -120,8 +120,9 @@ def f_add(request):
     else:
       form = F_addForm()
 
-    return render(request, 'meu_condominio/funcionarios/f_add.html',
-                  {'form' : form})
+    title = 'Cadastrar'
+    return render(request, 'meu_condominio/funcionarios/form.html',
+                  {'form' : form, 'title' : title})
   else:
     return HttpResponseRedirect(reverse('mc-login'))
 
@@ -130,5 +131,38 @@ def f_view(request):
     funcionarios = Funcionario.objects.all()
     return render(request, 'meu_condominio/funcionarios/f_view.html',
                   {'funcionarios' : funcionarios})
+  else:
+    return HttpResponseRedirect(reverse('mc-login'))
+
+def f_del(request, id):
+  if request.user.is_authenticated:
+    funcionario = Funcionario.objects.get(pk=id)
+    funcionario.delete()
+    messages.success(request, 'Funcionário deletado com sucesso!')
+    return HttpResponseRedirect(reverse('mc-f_view'))
+  else:
+    return HttpResponseRedirect(reverse('mc-login'))
+
+def f_edit(request, id):
+  if request.user.is_authenticated:
+    funcionario = Funcionario.objects.get(pk=id)
+
+    if request.method == 'POST':
+      form = F_addForm(request.POST)
+
+      if form.is_valid():
+        funcionario.nome = request.POST['nome']
+        funcionario.salario = request.POST['salario']
+        funcionario.save()
+        messages.success(request, 'Funcionário editado com sucesso!')
+        return HttpResponseRedirect(reverse('mc-f_view'))
+    else:
+      form = F_addForm()
+
+    form.fields['nome'].widget.attrs['placeholder'] = funcionario.nome
+    form.fields['salario'].widget.attrs['placeholder'] = funcionario.salario
+    title = 'Editar'
+    return render(request, 'meu_condominio/funcionarios/form.html',
+                  {'form' : form, 'title' : title})
   else:
     return HttpResponseRedirect(reverse('mc-login'))

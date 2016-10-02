@@ -1,10 +1,10 @@
 to-do:
 - iteração 2
-	- associar usuário a um condomínio e realizar login dessa forma
 	- fazer um usuário aprimorado com mais atributo
 	- cadastrar moradores
 		- alterar senha somente uma vez
-	- cadastrar funcionários
+	- relacionamentos db para caso com dois usuários
+		- associar usuário a um condomínio e realizar login dessa forma
 	- testar tudo antes de dizer que está pronto
 - extra
 	- validações?

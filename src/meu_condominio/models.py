@@ -16,6 +16,7 @@ class Condominio(models.Model):
 class Funcionario(models.Model):
   nome = models.CharField(max_length=100)
   salario = models.DecimalField(max_digits=20, decimal_places=2)
+  # condominio = models.ForeignKey(Condominio, on_delete=models.CASCADE)
 
   def __str__(self):
     return self.nome
