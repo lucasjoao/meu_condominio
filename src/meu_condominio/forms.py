@@ -42,3 +42,10 @@ class UpdateForm(forms.Form):
                              widget=forms.PasswordInput(
                              attrs={'placeholder':'Senha'}
                              ))
+
+class F_addForm(forms.Form):
+	nome = forms.CharField(label='Nome do funcionário:',
+												 widget=forms.TextInput(attrs={'placeholder':'Nome'}))
+	salario = forms.DecimalField(label='Salário do funcionário:',
+															 widget=forms.TextInput(attrs={
+																			'placeholder':'Salário'}))

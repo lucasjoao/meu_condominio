@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
@@ -6,8 +8,8 @@ from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.models import User
 
-from .forms import LoginForm, SignupForm, UpdateForm
-from .models import Condominio
+from .forms import LoginForm, SignupForm, UpdateForm, F_addForm
+from .models import Condominio, Funcionario
 
 def index(request):
   return render(request, 'meu_condominio/index.html')
@@ -106,6 +108,19 @@ def funcionarios(request):
 
 def f_add(request):
   if request.user.is_authenticated:
-    return render(request, 'meu_condominio/funcionarios/f_add.html')
+    if request.method == 'POST':
+      form = F_addForm(request.POST)
+
+      if form.is_valid():
+        f = Funcionario(nome=request.POST['nome'],
+                        salario=request.POST['salario'])
+        f.save()
+        messages.success(request, 'Funcionário adicionado com sucesso!')
+        return HttpResponseRedirect(reverse('mc-funcionarios'))
+    else:
+      form = F_addForm()
+
+    return render(request, 'meu_condominio/funcionarios/f_add.html',
+                  {'form' : form})
   else:
     return HttpResponseRedirect(reverse('mc-login'))
