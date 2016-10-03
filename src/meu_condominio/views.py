@@ -8,8 +8,8 @@ from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.models import User
 
-from .forms import LoginForm, SignupForm, UpdateForm, F_addForm
-from .models import Condominio, Funcionario
+from .forms import *
+from .models import Condominio, Funcionario, Apartamento
 
 def index(request):
   return render(request, 'meu_condominio/index.html')
@@ -22,8 +22,7 @@ def login(request):
                         )
 
     if form.is_valid() and user is not None:
-      if user.is_superuser == False:
-        form = UpdateForm()
+      if user.is_superuser == False and user.last_login is None:
         return HttpResponseRedirect(reverse('mc-update'))
       else:
         auth_login(request, user)
@@ -47,11 +46,14 @@ def signup(request):
                                    )
       u.is_superuser = True
       u.save()
+
       c = Condominio(nome_condominio=request.POST['nome_condominio'],
                     nro_apartamentos=int(request.POST['nro_apartamentos']),
-                    cep=request.POST['cep']
+                    cep=request.POST['cep'],
+                    user=u
                     )
       c.save()
+
       messages.success(request, 'Cadastro realizado com sucesso!')
       return HttpResponseRedirect(reverse('mc-login'))
   else:
@@ -109,16 +111,18 @@ def funcionarios(request):
 def f_add(request):
   if request.user.is_authenticated:
     if request.method == 'POST':
-      form = F_addForm(request.POST)
+      form = FuncionarioForm(request.POST)
 
       if form.is_valid():
+        c = Condominio.objects.get(user__pk=request.user.pk)
         f = Funcionario(nome=request.POST['nome'],
-                        salario=request.POST['salario'])
+                        salario=request.POST['salario'],
+                        condominio=c)
         f.save()
         messages.success(request, 'Funcionário adicionado com sucesso!')
         return HttpResponseRedirect(reverse('mc-f_view'))
     else:
-      form = F_addForm()
+      form = FuncionarioForm()
 
     title = 'Cadastrar'
     return render(request, 'meu_condominio/funcionarios/form.html',
@@ -148,7 +152,7 @@ def f_edit(request, id):
     funcionario = Funcionario.objects.get(pk=id)
 
     if request.method == 'POST':
-      form = F_addForm(request.POST)
+      form = FuncionarioForm(request.POST)
 
       if form.is_valid():
         funcionario.nome = request.POST['nome']
@@ -157,12 +161,61 @@ def f_edit(request, id):
         messages.success(request, 'Funcionário editado com sucesso!')
         return HttpResponseRedirect(reverse('mc-f_view'))
     else:
-      form = F_addForm()
+      form = FuncionarioForm()
 
     form.fields['nome'].widget.attrs['placeholder'] = funcionario.nome
     form.fields['salario'].widget.attrs['placeholder'] = funcionario.salario
     title = 'Editar'
     return render(request, 'meu_condominio/funcionarios/form.html',
                   {'form' : form, 'title' : title})
+  else:
+    return HttpResponseRedirect(reverse('mc-login'))
+
+def moradores(request):
+  if request.user.is_authenticated:
+    return render(request, 'meu_condominio/moradores.html')
+  else:
+    return HttpResponseRedirect(reverse('mc-login'))
+
+def m_add(request):
+  if request.user.is_authenticated:
+    c = Condominio.objects.get(user__pk=request.user.pk)
+    count_a = Apartamento.objects.all().count()
+
+    if request.method == 'POST':
+      form = MoradorForm(request.POST)
+
+      numero_ape = request.POST['numero_ape']
+      existe_a = Apartamento.objects.filter(numero=numero_ape).exists()
+
+      if form.is_valid() and count_a < c.nro_apartamentos and not existe_a:
+        m = User.objects.create_user(request.POST['nome'],
+                                     request.POST['email'],
+                                     request.POST['email']
+                                     )
+        m.save()
+
+        a = Apartamento(numero=request.POST['numero_ape'], ocupado=True,
+                    quantidade_moradores=str(int(request.POST['moradores'])+1),
+                    condominio=c, user=m)
+        a.save()
+
+        messages.success(request, 'Morador adicionado com sucesso!')
+        return HttpResponseRedirect(reverse('mc-m_view'))
+      else:
+        mensagem_tmp = 'Não há mais espaço no condominio e/ou '
+        mensagem = mensagem_tmp + ' apartamento já está ocupado!'
+        messages.warning(request, mensagem)
+    else:
+      form = MoradorForm()
+
+    title = 'Cadastrar'
+    m_min = count_a + 1
+    m_max = c.nro_apartamentos
+    replace = 'Valor entre 1 e ' + str(c.nro_apartamentos)
+    form.fields['numero_ape'].widget.attrs['placeholder'] = replace
+
+    return render(request, 'meu_condominio/moradores/form.html',
+                {'form' : form, 'title' : title, 'm_min':m_min, 'm_max':m_max})
   else:
     return HttpResponseRedirect(reverse('mc-login'))
