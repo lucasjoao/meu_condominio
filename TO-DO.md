@@ -1,7 +1,5 @@
 to-do:
 - iteração 2
-	- alterar senha somente uma vez
-		- arrumar update
 	- relacionamentos db para caso com dois usuários
 		- associar usuário a um condomínio e realizar login dessa forma
 	- diferenciar o que cada um pode visualizar
@@ -9,6 +7,8 @@ to-do:
 - extra
 	- fazer um usuário aprimorado com mais atributo
 	- permitir que um morador mude de apartamento
+	- não deixar que a senha default seja 'senhadefault' e melhorar lógica que verifica isso
+	- edição morador e impacto na sua senha default
 	- validações?
 	- add validação para baixo no nro de apartamentos
 	- add validação específica cpf

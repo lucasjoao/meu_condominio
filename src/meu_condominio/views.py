@@ -22,8 +22,8 @@ def login(request):
                         )
 
     if form.is_valid() and user is not None:
-      if user.is_superuser == False and user.last_login is None:
-        return HttpResponseRedirect(reverse('mc-update'))
+      if not user.is_superuser and user.check_password('senhadefault'):
+        return HttpResponseRedirect(reverse('mc-update', args=(user.id,)))
       else:
         auth_login(request, user)
         return render(request, 'meu_condominio/home.html',
@@ -69,11 +69,9 @@ def update(request, id):
       user = User.objects.get(pk=id)
       user.set_password(request.POST['password'])
       user.save()
-      user = authenticate(username=user.username,
-                          password=user.password
-                          )
-      auth_login(request, user)
-      return HttpResponseRedirect(reverse('mc-home'))
+
+      messages.success(request, 'Senha alterada com sucesso!')
+      return HttpResponseRedirect(reverse('mc-login'))
   else:
     form = UpdateForm()
 
@@ -191,7 +189,7 @@ def m_add(request):
       if form.is_valid() and count_a < c.nro_apartamentos and not existe_a:
         m = User.objects.create_user(request.POST['nome'],
                                      request.POST['email'],
-                                     request.POST['email']
+                                     'senhadefault'
                                      )
         m.save()
 
