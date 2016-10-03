@@ -41,14 +41,14 @@
         <th>E-mail</th>
         <th>Opções</th>
       </tr>
-      {% for morador in moradores %}
+      {% for apartamento in apartamentos %}
         <tr>
-          <td>{{ morador.username }}</td>
-          <td>{{ morador.apartamento.numero }}</td>
-          <td>{{ morador.email }}</td>
+          <td>{{ apartamento.user.username }}</td>
+          <td>{{ apartamento.numero }}</td>
+          <td>{{ apartamento.user.email }}</td>
           <td>
-            <a href="m_edit/{{ morador.id }}"> Editar</a> |
-            <a href="m_del/{{ morador.id }}">Excluir</a>
+            <a href="m_edit/{{ apartamento.user.id }}"> Editar</a> |
+            <a href="m_del/{{ apartamento.user.id }}">Excluir</a>
           </td>
         </tr>
       {% endfor %}

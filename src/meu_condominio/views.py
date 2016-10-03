@@ -79,8 +79,7 @@ def update(request, id):
 
 def home(request):
   if request.user.is_authenticated:
-    return render(request, 'meu_condominio/home.html',
-                  {'nome' : request.user.username})
+    return render(request, 'meu_condominio/home.html', {'user' : request.user})
   else:
     return HttpResponseRedirect(reverse('mc-login'))
 
@@ -90,19 +89,22 @@ def logout_view(request):
 
 def financas(request):
   if request.user.is_authenticated:
-    return render(request, 'meu_condominio/financas.html')
+    return render(request, 'meu_condominio/financas.html',
+                  {'user' : request.user})
   else:
     return HttpResponseRedirect(reverse('mc-login'))
 
 def espacos(request):
   if request.user.is_authenticated:
-    return render(request, 'meu_condominio/espacos.html')
+    return render(request, 'meu_condominio/espacos.html',
+                  {'user' : request.user})
   else:
     return HttpResponseRedirect(reverse('mc-login'))
 
 def funcionarios(request):
   if request.user.is_authenticated:
-    return render(request, 'meu_condominio/funcionarios.html')
+    return render(request, 'meu_condominio/funcionarios.html',
+                  {'user' : request.user})
   else:
     return HttpResponseRedirect(reverse('mc-login'))
 
@@ -130,7 +132,8 @@ def f_add(request):
 
 def f_view(request):
   if request.user.is_authenticated:
-    funcionarios = Funcionario.objects.all()
+    c = Condominio.objects.get(user__pk=request.user.pk)
+    funcionarios = Funcionario.objects.all().filter(condominio__pk=c.pk)
     return render(request, 'meu_condominio/funcionarios/f_view.html',
                   {'funcionarios' : funcionarios})
   else:
@@ -171,20 +174,21 @@ def f_edit(request, id):
 
 def moradores(request):
   if request.user.is_authenticated:
-    return render(request, 'meu_condominio/moradores.html')
+    return render(request, 'meu_condominio/moradores.html',
+                  {'user' : request.user})
   else:
     return HttpResponseRedirect(reverse('mc-login'))
 
 def m_add(request):
   if request.user.is_authenticated:
     c = Condominio.objects.get(user__pk=request.user.pk)
-    count_a = Apartamento.objects.all().count()
+    count_a = Apartamento.objects.all().filter(condominio__pk=c.pk).count()
 
     if request.method == 'POST':
       form = MoradorForm(request.POST)
 
       numero_ape = request.POST['numero_ape']
-      existe_a = Apartamento.objects.filter(numero=numero_ape).exists()
+      existe_a = Apartamento.objects.filter(numero=numero_ape).filter(condominio__pk=c.pk).exists()
 
       if form.is_valid() and count_a < c.nro_apartamentos and not existe_a:
         m = User.objects.create_user(request.POST['nome'],
@@ -220,9 +224,10 @@ def m_add(request):
 
 def m_view(request):
   if request.user.is_authenticated:
-    moradores = User.objects.all().filter(is_superuser=False)
+    c = Condominio.objects.get(user__pk=request.user.pk)
+    apartamentos = Apartamento.objects.all().filter(condominio__pk=c.pk)
     return render(request, 'meu_condominio/moradores/m_view.html',
-                  {'moradores' : moradores})
+                  {'apartamentos' : apartamentos})
   else:
     return HttpResponseRedirect(reverse('mc-login'))
 

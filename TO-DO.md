@@ -1,13 +1,10 @@
 to-do:
-- iteração 2
-	- relacionamentos db para caso com dois usuários
-		- associar usuário a um condomínio e realizar login dessa forma
-	- diferenciar o que cada um pode visualizar
-	- testar tudo antes de dizer que está pronto
 - extra
 	- fazer um usuário aprimorado com mais atributo
 	- permitir que um morador mude de apartamento
 	- não deixar que a senha default seja 'senhadefault' e melhorar lógica que verifica isso
+	- uma função no model ou no view separada para quantidade de moradores de um apartamento
+	- fazer verificação do tipo de usuário na view para evitar problemas com link digitado
 	- edição morador e impacto na sua senha default
 	- validações?
 	- add validação para baixo no nro de apartamentos
