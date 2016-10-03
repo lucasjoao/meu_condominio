@@ -219,3 +219,11 @@ def m_add(request):
                 {'form' : form, 'title' : title, 'm_min':m_min, 'm_max':m_max})
   else:
     return HttpResponseRedirect(reverse('mc-login'))
+
+def m_view(request):
+  if request.user.is_authenticated:
+    moradores = User.objects.all().filter(is_superuser=False)
+    return render(request, 'meu_condominio/moradores/m_view.html',
+                  {'moradores' : moradores})
+  else:
+    return HttpResponseRedirect(reverse('mc-login'))

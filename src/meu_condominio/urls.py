@@ -18,4 +18,5 @@ urlpatterns = [
   url(r'^funcionarios/f_edit/(?P<id>\d+)/$', views.f_edit, name='mc-f_edit'),
   url(r'^moradores/$', views.moradores, name='mc-moradores'),
   url(r'^moradores/m_add$', views.m_add, name='mc-m_add'),
+  url(r'^moradores/m_view$', views.m_view, name='mc-m_view'),
 ]
