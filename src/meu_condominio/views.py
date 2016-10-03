@@ -227,3 +227,42 @@ def m_view(request):
                   {'moradores' : moradores})
   else:
     return HttpResponseRedirect(reverse('mc-login'))
+
+def m_del(request, id):
+  if request.user.is_authenticated:
+    morador = User.objects.get(pk=id)
+    morador.delete()
+    messages.success(request, 'Morador deletado com sucesso!')
+    return HttpResponseRedirect(reverse('mc-m_view'))
+  else:
+    return HttpResponseRedirect(reverse('mc-login'))
+
+def m_edit(request, id):
+  if request.user.is_authenticated:
+    morador = User.objects.get(pk=id)
+    apartamento = Apartamento.objects.get(user__pk=id)
+
+    if request.method == 'POST':
+      form = MoradorForm(request.POST)
+
+      if form.is_valid():
+        morador.username = request.POST['nome']
+        morador.email = request.POST['email']
+        morador.save()
+        apartamento.quantidade_moradores = int(request.POST['moradores'])+1
+        apartamento.save()
+        messages.success(request, 'Morador editado com sucesso!')
+        return HttpResponseRedirect(reverse('mc-m_view'))
+    else:
+      form = MoradorForm()
+
+    form.fields['nome'].widget.attrs['placeholder'] = morador.username
+    form.fields['email'].widget.attrs['placeholder'] = morador.email
+    mensagem = 'VALOR NÃO FARÁ EFEITO!'
+    form.fields['numero_ape'].widget.attrs['placeholder'] = mensagem
+    form.fields['moradores'].widget.attrs['placeholder'] = apartamento.quantidade_moradores - 1
+    title = 'Editar'
+    return render(request, 'meu_condominio/moradores/form.html',
+                  {'form' : form, 'title' : title})
+  else:
+    return HttpResponseRedirect(reverse('mc-login'))

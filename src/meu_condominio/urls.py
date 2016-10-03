@@ -19,4 +19,6 @@ urlpatterns = [
   url(r'^moradores/$', views.moradores, name='mc-moradores'),
   url(r'^moradores/m_add$', views.m_add, name='mc-m_add'),
   url(r'^moradores/m_view$', views.m_view, name='mc-m_view'),
+  url(r'^moradores/m_del/(?P<id>\d+)/$', views.m_del, name='mc-m_del'),
+  url(r'^moradores/m_edit/(?P<id>\d+)/$', views.m_edit, name='mc-m_edit'),
 ]

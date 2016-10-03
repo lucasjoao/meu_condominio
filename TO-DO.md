@@ -1,14 +1,14 @@
 to-do:
 - iteração 2
-	- cadastrar moradores
-		- alterar senha somente uma vez
-			- arrumar update
+	- alterar senha somente uma vez
+		- arrumar update
 	- relacionamentos db para caso com dois usuários
 		- associar usuário a um condomínio e realizar login dessa forma
 	- diferenciar o que cada um pode visualizar
 	- testar tudo antes de dizer que está pronto
 - extra
 	- fazer um usuário aprimorado com mais atributo
+	- permitir que um morador mude de apartamento
 	- validações?
 	- add validação para baixo no nro de apartamentos
 	- add validação específica cpf
