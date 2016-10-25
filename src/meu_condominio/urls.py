@@ -10,6 +10,11 @@ urlpatterns = [
 	url(r'^home/$', views.home, name='mc-home'),
   url(r'^logout/$', views.logout_view, name='mc-logout'),
   url(r'^financas/$', views.financas, name='mc-financas'),
+  url(r'^financas/fin_add$', views.fin_add, name='mc-fin_add')
+  url(r'^financas/fin_view$', views.fin_view, name='mc-fin_view')
+  url(r'^financas/fin_edit/(?P<id>\d+)/$', views.fin_edit, name='mc-fin_edit'),
+  url(r'^financas/fin_view_relatorio/(?P<id>\d+)/$',
+    views.fin_view_relatorio, name='mc-fin_view_relatorio'),
   url(r'^espacos/$', views.espacos, name='mc-espacos'),
   url(r'^funcionarios/$', views.funcionarios, name='mc-funcionarios'),
   url(r'^funcionarios/f_add$', views.f_add, name='mc-f_add'),

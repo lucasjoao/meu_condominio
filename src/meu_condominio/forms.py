@@ -60,9 +60,10 @@ class MoradorForm(forms.Form):
   numero_ape = forms.IntegerField(label='Número do apartamento do morador:',
     widget=forms.TextInput(attrs={'placeholder':'Número'}))
 
-class DataForm(forms.Form):
+class RelatorioForm(forms.Form):
+  placeholder = 'O dia é indiferente, mas preencha no formato dd/mm/aaaa'
   data = forms.DateField(label='Mês da competência:',
                          widget=forms.DateInput(
                           format='%d/%m/%Y',
-                          attrs={'placeholder'='dd/mm/aaaa'}
+                          attrs={'placeholder'=placeholder}
                           ))

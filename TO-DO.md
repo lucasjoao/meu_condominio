@@ -1,6 +1,5 @@
 to-do:
 - receber dados financeiros && gerar relatório financeiro
-  - fazer form de data
   - fazer adição de dados pelo adm
     - ao salvar todos as taxas são salvas
     - nova tabela para "taxa"
@@ -8,9 +7,12 @@ to-do:
       - um apartamento pode ter várias taxas
   - adm editar dados
     - alguma forma de desabilitar dados (provavelmente gambi com 0)
-  - adm visualizar relatório geral
-  - morador visualizar relatório geral
-  - morador visualizar relatório pessoal
+  - adm visualizar relatório geral lista
+  - adm visualizar relatório geral específica
+  - morador visualizar relatório geral lista
+  - morador visualizar relatório pessoal lista
+  - morador visualizar relatório geral específica
+  - morador visualizar relatório pessoal específica
 
 iteração 4:
 - colocar tudo em classe

@@ -9,12 +9,7 @@ from django.contrib.auth.models import User
 from meu_condominio.forms import *
 
 def financas(request):
-  if request.user.is_authenticated:
-    if request.method == 'POST':
-      form = DataForm(request.POST)
-    else:
-      form = DataForm()
-
+   if request.user.is_authenticated:
     if request.user.is_superuser:
       option0 = 'Inserir dados'
     else:
@@ -23,7 +18,19 @@ def financas(request):
     option1 = 'Relatório geral'
 
     return render(request, 'meu_condominio/financas.html',
-                  {'user' : request.user, 'form' : form,
+                  {'user' : request.user,
                    'option0' : option0, 'option1' : option1})
   else:
     return HttpResponseRedirect(reverse('mc-login'))
+
+def fin_add(request):
+  pass
+
+def fin_view(request):
+  pass
+
+def fin_edit(request, id):
+  pass
+
+def fin_view_relatorio(request, id):
+  pass
