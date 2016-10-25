@@ -1,6 +1,4 @@
 to-do:
-- implementar algum padrão de projeto
-- colocar esteriótipo controller no view
 - receber dados financeiros
 - gerar relatório financeiro
 - colocar tudo em classe

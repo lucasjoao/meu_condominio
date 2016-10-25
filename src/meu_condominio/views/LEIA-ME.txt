@@ -1,0 +1,3 @@
+No framework Django o MVC é realizado com siglas diferentes. O "C" é realizado através da "views".
+
+https://docs.djangoproject.com/en/1.10/faq/general/#django-appears-to-be-a-mvc-framework-but-you-call-the-controller-the-view-and-the-view-the-template-how-come-you-don-t-use-the-standard-names
