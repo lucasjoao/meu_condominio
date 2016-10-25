@@ -9,10 +9,12 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth.models import User
 
 from meu_condominio.forms import *
-from meu_condominio.models import Condominio
+from meu_condominio.models import Condominio, FaleConosco
 
 def index(request):
-  return render(request, 'meu_condominio/index.html')
+  fale_conosco = FaleConosco.load()
+  return render(request, 'meu_condominio/index.html',
+                {'fale_conosco' : fale_conosco})
 
 def login(request):
   if request.method == 'POST':

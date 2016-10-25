@@ -37,3 +37,25 @@ class Apartamento(models.Model):
 
   def __str__(self):
     return self.numero
+
+class SingletonModel(models.Model):
+  class Meta:
+    abstract = True
+
+  def save(self, *args, **kwargs):
+    self.pk = 1
+    super(SingletonModel, self).save(*args, **kwargs)
+
+  def delete(self, *args, **kwargs):
+    pass
+
+  @classmethod
+  def load(cls):
+    obj, created = cls.objects.get_or_create(pk=1)
+    return obj
+
+class FaleConosco(SingletonModel):
+  dev0_nome = models.CharField(max_length=100, default='Lucas João Martins')
+  dev0_email = models.EmailField(default='lucasjoao.lj@gmail.com')
+  dev1_nome = models.CharField(max_length=100, default='Wesley Mayk Gama Luz')
+  dev1_email = models.EmailField(default='w_mayk007@hotmail.com')
