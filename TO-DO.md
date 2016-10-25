@@ -18,8 +18,9 @@ iteração 4:
 - colocar tudo em classe
 	+ classe para model?
 	+ classe para forms?
-- fazer verificação do tipo de usuário na view para evitar problemas com link digitado
-- uma função no model ou no view separada para quantidade de moradores de um apartamento
+- fazer verificação do tipo de usuário na view para evitar problemas com link digitado. Talvez fazer uma função que verifica
+- não ser igualitário na divisão das finanças para cada usuário e nem na inserção dos dados
+- uma função no model ou no view separada para quantidade de moradores de um apartamento e para cálculo de taxas
 - edição morador e impacto na sua senha default
 - permitir que um morador mude de apartamento
 - requisitos do trello

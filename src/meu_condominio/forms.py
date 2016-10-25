@@ -62,8 +62,20 @@ class MoradorForm(forms.Form):
 
 class RelatorioForm(forms.Form):
   placeholder = 'O dia é indiferente, mas preencha no formato dd/mm/aaaa'
+  gasto_total = 'Gasto total'
   data = forms.DateField(label='Mês da competência:',
                          widget=forms.DateInput(
                           format='%d/%m/%Y',
-                          attrs={'placeholder'=placeholder}
+                          attrs={'placeholder' : placeholder}
                           ))
+  agua = forms.DecimalField(label=gasto_total + ' com água:',
+    widget=forms.TextInput(attrs={'placeholder':gasto_total}))
+  luz = forms.DecimalField(label=gasto_total + ' com luz:',
+    widget=forms.TextInput(attrs={'placeholder':gasto_total}))
+  gas = forms.DecimalField(label=gasto_total + ' com gás:',
+    widget=forms.TextInput(attrs={'placeholder':gasto_total}))
+  condominio_taxa = forms.DecimalField(
+    label='Ganho total com taxas de condomínio:',
+    widget=forms.TextInput(attrs={'placeholder':'Ganho total'}))
+  manutencoes = forms.DecimalField(label=gasto_total + ' com manutenções:',
+    widget=forms.TextInput(attrs={'placeholder':gasto_total}))

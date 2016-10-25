@@ -59,3 +59,17 @@ class FaleConosco(SingletonModel):
   dev0_email = models.EmailField(default='lucasjoao.lj@gmail.com')
   dev1_nome = models.CharField(max_length=100, default='Wesley Mayk Gama Luz')
   dev1_email = models.EmailField(default='w_mayk007@hotmail.com')
+
+@python_2_unicode_compatible
+class Relatorio(models.Model):
+  condominio = models.ForeignKey(Condominio, on_delete=models.CASCADE)
+  data = models.CharField(max_length=7)
+  agua = models.DecimalField(max_digits=20, decimal_places=2)
+  luz = models.DecimalField(max_digits=20, decimal_places=2)
+  gas = models.DecimalField(max_digits=20, decimal_places=2)
+  condominio_taxa = models.DecimalField(max_digits=20, decimal_places=2)
+  manutencoes = models.DecimalField(max_digits=20, decimal_places=2)
+  eh_geral = models.BooleanField()
+
+  def __str__(self):
+    return self.data
