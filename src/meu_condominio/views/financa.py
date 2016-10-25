@@ -10,6 +10,11 @@ from meu_condominio.forms import *
 
 def financas(request):
   if request.user.is_authenticated:
+    if request.method == 'POST':
+      form = DataForm(request.POST)
+    else:
+      form = DataForm()
+
     if request.user.is_superuser:
       option0 = 'Inserir dados'
     else:
@@ -18,7 +23,7 @@ def financas(request):
     option1 = 'Relatório geral'
 
     return render(request, 'meu_condominio/financas.html',
-                  {'user' : request.user, 'option0' : option0,
-                   'option1' : option1})
+                  {'user' : request.user, 'form' : form,
+                   'option0' : option0, 'option1' : option1})
   else:
     return HttpResponseRedirect(reverse('mc-login'))
