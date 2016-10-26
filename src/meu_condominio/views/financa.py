@@ -31,10 +31,9 @@ def fin_add(request):
 
       data_formatada = helper_data(request.POST['data'])
 
-      existe_rel = Relatorio.objects.filter(data=data_formatada).exists()
+      c = Condominio.objects.get(user__pk=request.user.pk)
+      existe_rel = Relatorio.objects.filter(data=data_formatada).filter(condominio__pk=c.pk).exists()
       if form.is_valid and not existe_rel:
-        # necessary things
-        c = Condominio.objects.get(user__pk=request.user.pk)
         nro = Apartamento.objects.all().filter(condominio__pk=c.pk).count()
 
         # calculate balanco
@@ -43,7 +42,7 @@ def fin_add(request):
         for funcionario in funcionarios:
           prejuizo += funcionario.salario
         lucro = nro * float(request.POST['condominio_taxa'])
-        valor_balanco = lucro - prejuizo
+        valor_balanco = lucro - float(prejuizo)
 
         # calculate parcela
         todos_gastos = float(request.POST['agua']) + float(request.POST['luz']) + float(request.POST['gas']) + float(request.POST['manutencoes'])
@@ -76,9 +75,9 @@ def fin_add(request):
                         agua=helper_rel_ind(request.POST['agua'], nro),
                         luz=helper_rel_ind(request.POST['luz'], nro),
                         gas=helper_rel_ind(request.POST['gas'], nro),
-                        condominio_taxa=
-                          helper_rel_ind(request.POST['condominio_taxa'], nro),
-                        manutencoes=         helper_rel_ind(request.POST['manutencoes'], nro),
+                        condominio_taxa=request.POST['condominio_taxa'],
+                        manutencoes=
+                          helper_rel_ind(request.POST['manutencoes'], nro),
                         eh_geral=False, despesa_extra=d, balanco=0.00,
                         parcela=valor_parcela
                         )
@@ -103,15 +102,16 @@ def fin_add(request):
 
 def fin_view(request):
   if request.user.is_authenticated:
-    c = Condominio.objects.get(user__pk=request.user.pk)
-
     if request.user.is_superuser:
+      c = Condominio.objects.get(user__pk=request.user.pk)
       relatorios = Relatorio.objects.all().filter(condominio__pk=c.pk).filter(eh_geral=True)
     else:
+      a = Apartamento.objects.get(user__pk=request.user.pk)
+      c = Condominio.objects.get(pk=a.condominio)
       relatorios = Relatorio.objects.all().filter(condominio__pk=c.pk)
 
     return render(request, 'meu_condominio/financas/fin_view.html',
-                  {'relatorios' : relatorios})
+                  {'user' : request.user, 'relatorios' : relatorios})
   else:
     return HttpResponseRedirect(reverse('mc-login'))
 
@@ -119,7 +119,17 @@ def fin_edit(request, id):
   pass
 
 def fin_view_relatorio(request, id):
-  pass
+  if request.user.is_authenticated:
+    relatorio = Relatorio.objects.get(pk=id)
+
+    if relatorio.eh_geral == True:
+      return render(request, 'meu_condominio/financas/relatorio_geral.html',
+                    {'relatorio' : relatorio})
+    else:
+      return render(request, 'meu_condominio/financas/relatorio_ind.html',
+                    {'relatorio' : relatorio})
+  else:
+    return HttpResponseRedirect(reverse('mc-login'))
 
 def helper_data(data):
   return data[3:]

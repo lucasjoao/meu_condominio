@@ -1,23 +1,11 @@
 to-do:
-- receber dados financeiros && gerar relatório financeiro
-  - fazer adição de dados pelo adm
-    - ao salvar todos as taxas são salvas
-    - nova tabela para "taxa"
-      - um condomínio pode ter várias taxas
-      - um apartamento pode ter várias taxas
-  - adm editar dados
-    - alguma forma de desabilitar dados (provavelmente gambi com 0)
-  - adm visualizar relatório geral lista
-  - adm visualizar relatório geral específica
-  - morador visualizar relatório geral lista
-  - morador visualizar relatório pessoal lista
-  - morador visualizar relatório geral específica
-  - morador visualizar relatório pessoal específica
-
 iteração 4:
+  - adm editar dados financeiros
+    - alguma forma de desabilitar dados (provavelmente gambi com 0)
 - colocar tudo em classe
 	+ classe para model?
 	+ classe para forms?
+- validar entrada do mês de uma maneira mais precisa. **é preciso fazer isso para a iteração 4??**
 - fazer verificação do tipo de usuário na view para evitar problemas com link digitado. Talvez fazer uma função que verifica
 - não ser igualitário na divisão das finanças para cada usuário e nem na inserção dos dados
 - uma função no model ou no view separada para quantidade de moradores de um apartamento e para cálculo de taxas

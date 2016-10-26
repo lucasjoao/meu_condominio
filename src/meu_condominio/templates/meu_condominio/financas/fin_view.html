@@ -37,14 +37,22 @@
     <table style="width:100%" class="pure-table pure-table-bordered">
       <tr>
         <th>Competência</th>
+        {% if not user.is_superuser %}
+        <th>Geral</th>
+        {% endif %}
         <th>Opções</th>
       </tr>
       {% for relatorio in relatorios %}
         <tr>
           <td>{{ relatorio.data }}</td>
+          {% if not user.is_superuser %}
+          <th>{{ relatorio.eh_geral }}</th>
+          {% endif %}
           <td>
-            <a href="fin_edit/{{ relatorio.id }}"> Editar</a> |
-            <a href="fin_view_relatorio/{{ relatorio.id }}">Visualizar</a>
+            {% if user.is_superuser %}
+            <a href="fin_edit/{{ relatorio.pk }}"> Editar</a> |
+            {% endif %}
+            <a href="fin_view_relatorio/{{ relatorio.pk }}">Visualizar</a>
           </td>
         </tr>
       {% endfor %}
