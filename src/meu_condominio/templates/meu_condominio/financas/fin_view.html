@@ -14,7 +14,7 @@
 <head>
 
 <meta charset="utf-8">
-<title>Listar relatórios gerais - Meu Condomínio</title>
+<title>Listar relatórios {{ option }} - Meu Condomínio</title>
 
 <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
 <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
@@ -30,7 +30,7 @@
   </div>
   <div class="pure-u-1-3">
     <div class="header">
-      <h1>Relatórios gerais</h1>
+      <h1>Relatórios {{ option }}</h1>
     </div>
     <div class="pure-u-1-3">
     </div>
@@ -49,13 +49,21 @@
           <th>{{ relatorio.eh_geral }}</th>
           {% endif %}
           <td>
-            {% if user.is_superuser %}
-            <a href="fin_edit/{{ relatorio.pk }}"> Editar</a> |
-            {% endif %}
             <a href="fin_view_relatorio/{{ relatorio.pk }}">Visualizar</a>
           </td>
         </tr>
       {% endfor %}
+      {% if not user.is_superuser %}
+      {% for relatorio in relatorios %}
+        <tr>
+          <td>{{ relatorio.data }}</td>
+          <th>False</th>
+          <td>
+            <a href="fin_view_relatorio/{{ relatorio.pk }}?id=0">Visualizar</a>
+          </td>
+        </tr>
+      {% endfor %}
+      {% endif %}
     </table>
     <div class="pure-u-1-3">
     </div>

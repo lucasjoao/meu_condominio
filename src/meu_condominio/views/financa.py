@@ -44,14 +44,8 @@ def fin_add(request):
         lucro = nro * float(request.POST['condominio_taxa'])
         valor_balanco = lucro - float(prejuizo)
 
-        # calculate parcela
-        todos_gastos = float(request.POST['agua']) + float(request.POST['luz']) + float(request.POST['gas']) + float(request.POST['manutencoes'])
-        extra_valor_tmp = request.POST['extra_valor']
-        todos_gastos += 0 if extra_valor_tmp == '' else float(extra_valor_tmp)
-        gasto_por_apartamento = 0 if nro == 0 else todos_gastos/nro
-        valor_parcela = float(request.POST['condominio_taxa']) + gasto_por_apartamento
-
         # save despesa_extra
+        extra_valor_tmp = request.POST['extra_valor']
         d = DespesaExtra()
         if extra_valor_tmp != '':
           d = DespesaExtra(nome=request.POST['extra_nome'],
@@ -68,20 +62,6 @@ def fin_add(request):
                         despesa_extra=d, balanco=valor_balanco, parcela=0.00
                       )
         rel_general.save()
-
-        # save individual rel
-        if nro != 0:
-          rel_ind = Relatorio(condominio=c, data=data_formatada,
-                        agua=helper_rel_ind(request.POST['agua'], nro),
-                        luz=helper_rel_ind(request.POST['luz'], nro),
-                        gas=helper_rel_ind(request.POST['gas'], nro),
-                        condominio_taxa=request.POST['condominio_taxa'],
-                        manutencoes=
-                          helper_rel_ind(request.POST['manutencoes'], nro),
-                        eh_geral=False, despesa_extra=d, balanco=0.00,
-                        parcela=valor_parcela
-                        )
-          rel_ind.save()
 
         # finish
         messages.success(request, 'Relatórios do mês adicionado com sucesso!')
@@ -102,16 +82,19 @@ def fin_add(request):
 
 def fin_view(request):
   if request.user.is_authenticated:
+    option = ''
     if request.user.is_superuser:
       c = Condominio.objects.get(user__pk=request.user.pk)
       relatorios = Relatorio.objects.all().filter(condominio__pk=c.pk).filter(eh_geral=True)
+      option = ' gerais'
     else:
       a = Apartamento.objects.get(user__pk=request.user.pk)
       c = Condominio.objects.get(pk=a.condominio)
       relatorios = Relatorio.objects.all().filter(condominio__pk=c.pk)
 
     return render(request, 'meu_condominio/financas/fin_view.html',
-                  {'user' : request.user, 'relatorios' : relatorios})
+                  {'user' : request.user, 'relatorios' : relatorios,
+                   'option' : option})
   else:
     return HttpResponseRedirect(reverse('mc-login'))
 
@@ -122,11 +105,29 @@ def fin_view_relatorio(request, id):
   if request.user.is_authenticated:
     relatorio = Relatorio.objects.get(pk=id)
 
-    if relatorio.eh_geral == True:
-      return render(request, 'meu_condominio/financas/relatorio_geral.html',
-                    {'relatorio' : relatorio})
-    else:
+    if request.GET.get('id') is not None: # rel individual
+
+      c = Condominio.objects.get(relatorio__pk=relatorio.pk)
+      nro_ap = Apartamento.objects.all().filter(condominio__pk=c.pk).count()
+      d = DespesaExtra.objects.get(relatorio__pk=relatorio.pk)
+
+      agua = helper_rel_ind(relatorio.agua, nro_ap)
+      luz = helper_rel_ind(relatorio.luz, nro_ap)
+      gas = helper_rel_ind(relatorio.gas, nro_ap)
+      manutencoes = helper_rel_ind(relatorio.manutencoes, nro_ap)
+
+      todos_gastos = float(relatorio.agua) + float(relatorio.luz) + float(relatorio.gas) + float(relatorio.manutencoes)
+      extra_valor_tmp = d.valor
+      todos_gastos += 0 if extra_valor_tmp == None else float(extra_valor_tmp)
+      gasto_por_apartamento = todos_gastos/nro_ap
+      parcela = float(relatorio.condominio_taxa) + gasto_por_apartamento
+
       return render(request, 'meu_condominio/financas/relatorio_ind.html',
+                    {'relatorio' : relatorio, 'parcela' : parcela,
+                     'agua' : agua, 'luz' : luz, 'gas' : gas,
+                     'manutencoes' : manutencoes})
+    else:
+      return render(request, 'meu_condominio/financas/relatorio_geral.html',
                     {'relatorio' : relatorio})
   else:
     return HttpResponseRedirect(reverse('mc-login'))
@@ -134,5 +135,5 @@ def fin_view_relatorio(request, id):
 def helper_data(data):
   return data[3:]
 
-def helper_rel_ind(valor, nro_moradores):
-  return str(float(float(valor)/nro_moradores))
+def helper_rel_ind(valor, nro):
+  return str(float(float(valor)/nro))

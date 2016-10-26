@@ -25,15 +25,15 @@
       <h1>Relatório individual {{ relatorio.data }}</h1>
     </div>
     <div class="content">
-      <h2 class="content-subhead">Parcela do mês: {{ relatorio.parcela }}</h2>
+      <h2 class="content-subhead">Parcela do mês: {{ parcela }}</h2>
       <p>todas_despesas/nro_condominos + taxa fixa</p>
       <h2 class="content-subhead">Detalhamento de gastos:</h2>
       <p>
         <ul>
-          <li>Água: {{ relatorio.agua }}</li>
-          <li>Luz: {{ relatorio.luz }}</li>
-          <li>Gás: {{ relatorio.gas }}</li>
-          <li>Manutenções: {{ relatorio.manutencoes }}</li>
+          <li>Água: {{ agua }}</li>
+          <li>Luz: {{ luz }}</li>
+          <li>Gás: {{ gas }}</li>
+          <li>Manutenções: {{ manutencoes }}</li>
           <li>Taxa fixa: {{ relatorio.condominio_taxa }}</li>
         </ul>
       </p>
