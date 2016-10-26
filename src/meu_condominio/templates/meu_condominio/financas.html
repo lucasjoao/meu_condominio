@@ -55,14 +55,16 @@
       <h2 class="content-subhead">Opções:</h2>
       <p>
         <ul>
+          {% if user.is_superuser %}
           <li>
             <a href="fin_add" class="pure-menu-link">
-              {{ option0 }}
+              Inserir dados financeiros
             </a>
           </li>
+          {% endif %}
           <li>
             <a href="fin_view" class="pure-menu-link">
-              {{ option1 }}
+              {{ option }}
             </a>
           </li>
         </ul>

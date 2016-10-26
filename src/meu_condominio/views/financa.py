@@ -15,15 +15,12 @@ from datetime import datetime
 def financas(request):
   if request.user.is_authenticated:
     if request.user.is_superuser:
-      option0 = 'Inserir dados financeiros'
+      option = 'Relatórios gerais'
     else:
-      option0 = 'Relatório pessoal'
-
-    option1 = 'Relatórios gerais'
+      option = 'Relatórios'
 
     return render(request, 'meu_condominio/financas.html',
-                  {'user' : request.user,
-                   'option0' : option0, 'option1' : option1})
+                  {'user' : request.user, 'option' : option})
   else:
     return HttpResponseRedirect(reverse('mc-login'))
 
@@ -49,14 +46,18 @@ def fin_add(request):
         valor_balanco = lucro - prejuizo
 
         # calculate parcela
-        todos_gastos = float(request.POST['agua']) + float(request.POST['luz']) + float(request.POST['gas']) + float(request.POST['manutencoes'])   + float(request.POST['extra_valor'])
+        todos_gastos = float(request.POST['agua']) + float(request.POST['luz']) + float(request.POST['gas']) + float(request.POST['manutencoes'])
+        extra_valor_tmp = request.POST['extra_valor']
+        todos_gastos += 0 if extra_valor_tmp == '' else float(extra_valor_tmp)
         gasto_por_apartamento = 0 if nro == 0 else todos_gastos/nro
         valor_parcela = float(request.POST['condominio_taxa']) + gasto_por_apartamento
 
         # save despesa_extra
-        d = DespesaExtra(nome=request.POST['extra_nome'],
-                        valor=request.POST['extra_valor'],
-                        motivo=request.POST['extra_motivo'])
+        d = DespesaExtra()
+        if extra_valor_tmp != '':
+          d = DespesaExtra(nome=request.POST['extra_nome'],
+                          valor=request.POST['extra_valor'],
+                          motivo=request.POST['extra_motivo'])
         d.save()
 
         # save general rel
@@ -70,18 +71,18 @@ def fin_add(request):
         rel_general.save()
 
         # save individual rel
-        rel_ind = Relatorio(condominio=c, data=data_formatada,
+        if nro != 0:
+          rel_ind = Relatorio(condominio=c, data=data_formatada,
                         agua=helper_rel_ind(request.POST['agua'], nro),
                         luz=helper_rel_ind(request.POST['luz'], nro),
                         gas=helper_rel_ind(request.POST['gas'], nro),
                         condominio_taxa=
                           helper_rel_ind(request.POST['condominio_taxa'], nro),
-                        manutencoes=
-                          helper_rel_ind(request.POST['manutencoes'], nro),
+                        manutencoes=         helper_rel_ind(request.POST['manutencoes'], nro),
                         eh_geral=False, despesa_extra=d, balanco=0.00,
                         parcela=valor_parcela
-                      )
-        rel_ind.save()
+                        )
+          rel_ind.save()
 
         # finish
         messages.success(request, 'Relatórios do mês adicionado com sucesso!')
