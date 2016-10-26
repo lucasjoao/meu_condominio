@@ -61,6 +61,15 @@ class FaleConosco(SingletonModel):
   dev1_email = models.EmailField(default='w_mayk007@hotmail.com')
 
 @python_2_unicode_compatible
+class DespesaExtra(models.Model):
+  nome = models.CharField(max_length=100, null=True)
+  valor = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+  motivo = models.CharField(max_length=100, null=True)
+
+  def __str__(self):
+    return self.nome
+
+@python_2_unicode_compatible
 class Relatorio(models.Model):
   condominio = models.ForeignKey(Condominio, on_delete=models.CASCADE)
   data = models.CharField(max_length=7)
@@ -70,6 +79,10 @@ class Relatorio(models.Model):
   condominio_taxa = models.DecimalField(max_digits=20, decimal_places=2)
   manutencoes = models.DecimalField(max_digits=20, decimal_places=2)
   eh_geral = models.BooleanField()
+  despesa_extra = models.OneToOneField(DespesaExtra, on_delete=models.CASCADE,
+    primary_key=True)
+  balanco = models.DecimalField(max_digits=20, decimal_places=2)
+  parcela = models.DecimalField(max_digits=20, decimal_places=2)
 
   def __str__(self):
     return self.data

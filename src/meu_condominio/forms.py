@@ -74,8 +74,15 @@ class RelatorioForm(forms.Form):
     widget=forms.TextInput(attrs={'placeholder':gasto_total}))
   gas = forms.DecimalField(label=gasto_total + ' com gás:',
     widget=forms.TextInput(attrs={'placeholder':gasto_total}))
-  condominio_taxa = forms.DecimalField(
-    label='Ganho total com taxas de condomínio:',
-    widget=forms.TextInput(attrs={'placeholder':'Ganho total'}))
+  condominio_taxa = forms.DecimalField(label='Taxa de condomínio:',
+    widget=forms.TextInput(attrs={'placeholder':'Valor por apartamento'}))
   manutencoes = forms.DecimalField(label=gasto_total + ' com manutenções:',
     widget=forms.TextInput(attrs={'placeholder':gasto_total}))
+  extra_nome = forms.CharField(label='Nome da despesa extra:', required=False,
+    widget=forms.TextInput(attrs={'placeholder':'Nome'}))
+  extra_valor = forms.DecimalField(label='Valor da despesa extra:',
+    required=False,
+    widget=forms.TextInput(attrs={'placeholder':'Valor'}))
+  extra_motivo = forms.CharField(label='Motivo da despesa extra:',
+    required=False,
+    widget=forms.TextInput(attrs={'placeholder':'Motivo'}))

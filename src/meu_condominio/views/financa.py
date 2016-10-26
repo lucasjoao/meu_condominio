@@ -8,18 +8,18 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 
 from meu_condominio.forms import *
-from meu_condominio.models import Relatorio, Condominio, Apartamento
+from meu_condominio.models import *
 
 from datetime import datetime
 
 def financas(request):
   if request.user.is_authenticated:
     if request.user.is_superuser:
-      option0 = 'Inserir dados'
+      option0 = 'Inserir dados financeiros'
     else:
       option0 = 'Relatório pessoal'
 
-    option1 = 'Relatório geral'
+    option1 = 'Relatórios gerais'
 
     return render(request, 'meu_condominio/financas.html',
                   {'user' : request.user,
@@ -36,15 +36,36 @@ def fin_add(request):
 
       existe_rel = Relatorio.objects.filter(data=data_formatada).exists()
       if form.is_valid and not existe_rel:
+        # necessary things
         c = Condominio.objects.get(user__pk=request.user.pk)
         nro = Apartamento.objects.all().filter(condominio__pk=c.pk).count()
+
+        # calculate balanco
+        funcionarios = Funcionario.objects.all().filter(condominio__pk=c.pk)
+        prejuizo = 0
+        for funcionario in funcionarios:
+          prejuizo += funcionario.salario
+        lucro = nro * float(request.POST['condominio_taxa'])
+        valor_balanco = lucro - prejuizo
+
+        # calculate parcela
+        todos_gastos = float(request.POST['agua']) + float(request.POST['luz']) + float(request.POST['gas']) + float(request.POST['manutencoes'])   + float(request.POST['extra_valor'])
+        gasto_por_apartamento = 0 if nro == 0 else todos_gastos/nro
+        valor_parcela = float(request.POST['condominio_taxa']) + gasto_por_apartamento
+
+        # save despesa_extra
+        d = DespesaExtra(nome=request.POST['extra_nome'],
+                        valor=request.POST['extra_valor'],
+                        motivo=request.POST['extra_motivo'])
+        d.save()
 
         # save general rel
         rel_general = Relatorio(condominio=c, data=data_formatada,
                         agua=request.POST['agua'], luz=request.POST['luz'],
                         gas=request.POST['gas'],
                         condominio_taxa=request.POST['condominio_taxa'],
-                        manutencoes=request.POST['manutencoes'], eh_geral=True
+                        manutencoes=request.POST['manutencoes'], eh_geral=True,
+                        despesa_extra=d, balanco=valor_balanco, parcela=0.00
                       )
         rel_general.save()
 
@@ -57,10 +78,12 @@ def fin_add(request):
                           helper_rel_ind(request.POST['condominio_taxa'], nro),
                         manutencoes=
                           helper_rel_ind(request.POST['manutencoes'], nro),
-                        eh_geral=False
+                        eh_geral=False, despesa_extra=d, balanco=0.00,
+                        parcela=valor_parcela
                       )
         rel_ind.save()
 
+        # finish
         messages.success(request, 'Relatórios do mês adicionado com sucesso!')
         return HttpResponseRedirect(reverse('mc-fin_view'))
       else:
@@ -78,7 +101,18 @@ def fin_add(request):
     return HttpResponseRedirect(reverse('mc-login'))
 
 def fin_view(request):
-  pass
+  if request.user.is_authenticated:
+    c = Condominio.objects.get(user__pk=request.user.pk)
+
+    if request.user.is_superuser:
+      relatorios = Relatorio.objects.all().filter(condominio__pk=c.pk).filter(eh_geral=True)
+    else:
+      relatorios = Relatorio.objects.all().filter(condominio__pk=c.pk)
+
+    return render(request, 'meu_condominio/financas/fin_view.html',
+                  {'relatorios' : relatorios})
+  else:
+    return HttpResponseRedirect(reverse('mc-login'))
 
 def fin_edit(request, id):
   pass
