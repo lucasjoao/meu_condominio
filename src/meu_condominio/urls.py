@@ -18,6 +18,7 @@ urlpatterns = [
   url(r'^espacos/$', views.espacos, name='mc-espacos'),
   url(r'^espacos/esp_res$', views.esp_res, name='mc-e_res'),
   url(r'^espacos/esp_view$', views.esp_view, name='mc-e_view'),
+  url(r'^espacos/esp_del/(?P<id>\d+)/$', views.esp_del, name='mc-e_del'),
   url(r'^funcionarios/$', views.funcionarios, name='mc-funcionarios'),
   url(r'^funcionarios/f_add$', views.f_add, name='mc-f_add'),
   url(r'^funcionarios/f_view$', views.f_view, name='mc-f_view'),

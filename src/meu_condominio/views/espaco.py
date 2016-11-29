@@ -59,3 +59,12 @@ def esp_view(request):
                   {'user' : request.user, 'reservas' : reservas})
   else:
     return HttpResponseRedirect(reverse('mc-login'))
+
+def esp_del(request, id):
+  if request.user.is_authenticated:
+    reserva = Reserva.objects.get(pk=id)
+    reserva.delete()
+    messages.success(request, 'Reserva cancelada com sucesso!')
+    return HttpResponseRedirect(reverse('mc-e_view'))
+  else:
+    return HttpResponseRedirect(reverse('mc-login'))

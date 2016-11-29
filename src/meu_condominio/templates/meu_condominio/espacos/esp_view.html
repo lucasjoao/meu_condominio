@@ -46,7 +46,7 @@
           <td>{{ reserva.turno }}</td>
           <td>
             {% if not user.is_superuser %}
-            <a href="">Cancelar</a>
+            <a href="esp_del/{{ reserva.id }}">Cancelar</a>
             {% else %}
             <a href="">Bloquear</a> |
             <a href="">Multar</a>
