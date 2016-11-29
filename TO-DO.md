@@ -13,6 +13,9 @@ iteração 4:
 - permitir que um morador mude de apartamento
 - requisitos do trello
 
+necessidades prioridade alta:
+- multar reserva influenciar no finanças
+
 bugs conhecidos:
 - se tentar adicionar uma reserva que já existe, sistema não permite e continua na mesma tela. Se tentar salvar novamente uma reserva que já existe, agora ele irá salvar
 

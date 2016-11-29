@@ -64,7 +64,10 @@ def esp_del(request, id):
   if request.user.is_authenticated:
     reserva = Reserva.objects.get(pk=id)
     reserva.delete()
-    messages.success(request, 'Reserva cancelada com sucesso!')
+    if request.user.is_superuser:
+      messages.success(request, 'Reserva bloqueada com sucesso!')
+    else:
+      messages.success(request, 'Reserva cancelada com sucesso!')
     return HttpResponseRedirect(reverse('mc-e_view'))
   else:
     return HttpResponseRedirect(reverse('mc-login'))
