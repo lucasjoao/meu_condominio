@@ -49,17 +49,76 @@
   <div id="main">
     <div class="header">
       <h1>Espaços</h1>
-      <h2>Em construção - fim previsto na iteração 4<h2>
     </div>
 
-    <!-- commented for now
     <div class="content">
-      <h2 class="content-subhead">Lorem ipsum dolor sit amet</h2>
+      <h2 class="content-subhead">Opções:</h2>
       <p>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        <ul>
+          {% if user.is_superuser %}
+          <li>
+            <a href="fin_add" class="pure-menu-link">
+              Ações administrativas
+            </a>
+          </li>
+          {% else %}
+          <li>
+            <a href="esp_res" class="pure-menu-link">
+              Reservar horário
+            </a>
+          </li>
+          <li>
+            <a href="fin_view" class="pure-menu-link">
+              Cancelar horário
+            </a>
+          </li>
+          {% endif %}
+        </ul>
       </p>
+      <h2 class="content-subhead">Salão de festa</h2>
+      <table style="width:100%" class="pure-table pure-table-bordered">
+        <tr>
+          <th>Turno</th>
+          <th>Dom</th>
+          <th>Seg</th>
+          <th>Ter</th>
+          <th>Qua</th>
+          <th>Qui</th>
+          <th>Sex</th>
+          <th>Sab</th>
+        </tr>
+        <tr>
+          <td>Manhã</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Tarde</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Noite</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
     </div>
-    -->
   </div>
 </div>
 

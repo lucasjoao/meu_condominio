@@ -86,3 +86,12 @@ class Relatorio(models.Model):
 
   def __str__(self):
     return self.data
+
+@python_2_unicode_compatible
+class Reserva(models.Model):
+  condominio = models.ForeignKey(Condominio, on_delete=models.CASCADE)
+  dia = models.CharField(max_length=3)
+  turno = models.CharField(max_length=5)
+
+  def __str__(self):
+    return self.dia + self.turno

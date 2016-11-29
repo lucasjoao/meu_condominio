@@ -86,3 +86,14 @@ class RelatorioForm(forms.Form):
   extra_motivo = forms.CharField(label='Motivo da despesa extra:',
     required=False,
     widget=forms.TextInput(attrs={'placeholder':'Motivo'}))
+
+class ReservaForm(forms.Form):
+  label_dia = 'Dia da semana (preencha no formato adequado):'
+  placeholder_dia = 'Dom, Seg, Ter, Qua, Qui, Sex ou Sab'
+  dia = forms.CharField(label=label_dia,
+    widget=forms.TextInput(attrs={'placeholder':placeholder_dia}))
+
+  label_turno = 'Turno (preencha no formato adequado):'
+  placeholder_turno = 'Manhã, Tarde ou Noite'
+  turno = forms.CharField(label=label_turno,
+    widget=forms.TextInput(attrs={'placeholder':placeholder_turno}))
