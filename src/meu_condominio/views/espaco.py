@@ -32,8 +32,6 @@ def esp_res(request):
         r = Reserva(condominio=c, dia=dia, turno=turno, user=request.user)
         r.save()
 
-        # finish
-        messages.success(request, 'Reserva adicionada com sucesso!')
         return HttpResponseRedirect(reverse('mc-espacos'))
       else:
         mensagem = "Já há uma reserva para esse dia e turno!"

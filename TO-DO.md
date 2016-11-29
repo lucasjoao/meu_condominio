@@ -13,6 +13,9 @@ iteração 4:
 - permitir que um morador mude de apartamento
 - requisitos do trello
 
+bugs conhecidos:
+- se tentar adicionar uma reserva que já existe, sistema não permite e continua na mesma tela. Se tentar salvar novamente uma reserva que já existe, agora ele irá salvar
+
 melhoria prioridade baixa:
 - fazer um usuário aprimorado com mais atributo
 - não deixar que a senha default seja 'senhadefault' e melhorar lógica que verifica isso
