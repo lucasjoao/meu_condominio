@@ -44,3 +44,18 @@ def esp_res(request):
       {'form' : form})
   else:
     return HttpResponseRedirect(reverse('mc-login'))
+
+def esp_view(request):
+  if request.user.is_authenticated:
+    option = ''
+    if request.user.is_superuser:
+      c = Condominio.objects.get(user__pk=request.user.pk)
+      reservas = Reserva.objects.all().filter(condominio__pk=c.pk)
+    else:
+      a = Apartamento.objects.get(user__pk=request.user.pk)
+      reservas = Reserva.objects.all().filter(apartamento=a)
+
+    return render(request, 'meu_condominio/espacos/esp_view.html',
+                  {'user' : request.user, 'reservas' : reservas})
+  else:
+    return HttpResponseRedirect(reverse('mc-login'))
