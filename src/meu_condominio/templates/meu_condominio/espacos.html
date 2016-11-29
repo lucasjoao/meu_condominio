@@ -75,7 +75,7 @@
           {% endif %}
         </ul>
       </p>
-      <h2 class="content-subhead">Salão de festa</h2>
+      <h2 class="content-subhead">Agenda do salão de festa</h2>
       <table style="width:100%" class="pure-table pure-table-bordered">
         <tr>
           <th>Turno</th>
@@ -89,33 +89,21 @@
         </tr>
         <tr>
           <td>Manhã</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          {% for m in manha %}
+            <td>{% if m %} Ocupado {% endif %}</td>
+          {% endfor %}
         </tr>
         <tr>
           <td>Tarde</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          {% for t in tarde %}
+            <td>{% if t %} Ocupado {% endif %}</td>
+          {% endfor %}
         </tr>
         <tr>
           <td>Noite</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          {% for n in noite %}
+            <td>{% if n %} Ocupado {% endif %}</td>
+          {% endfor %}
         </tr>
       </table>
     </div>

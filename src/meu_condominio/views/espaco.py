@@ -12,8 +12,19 @@ from meu_condominio.models import *
 
 def espacos(request):
   if request.user.is_authenticated:
+    if request.user.is_superuser:
+      c = Condominio.objects.get(user__pk=request.user.pk)
+    else:
+      a = Apartamento.objects.get(user__pk=request.user.pk)
+      c = Condominio.objects.get(pk=a.condominio)
+
+    manha = helper_table('Manhã', c.pk)
+    tarde = helper_table('Tarde', c.pk)
+    noite = helper_table('Noite', c.pk)
+
     return render(request, 'meu_condominio/espacos.html',
-                  {'user' : request.user})
+                  {'user' : request.user, 'manha' : manha, 'tarde' : tarde,
+                   'noite' : noite})
   else:
     return HttpResponseRedirect(reverse('mc-login'))
 
@@ -71,3 +82,22 @@ def esp_del(request, id):
     return HttpResponseRedirect(reverse('mc-e_view'))
   else:
     return HttpResponseRedirect(reverse('mc-login'))
+
+def helper_table(t, cond_pk):
+  vector = [False] * 7
+  for reserva in Reserva.objects.all().filter(turno=t).filter(condominio__pk=cond_pk):
+    if reserva.dia == 'Dom':
+      vector[0] = True
+    elif reserva.dia == 'Seg':
+      vector[1] = True
+    elif reserva.dia == 'Ter':
+      vector[2] = True
+    elif reserva.dia == 'Qua':
+      vector[3] = True
+    elif reserva.dia == 'Qui':
+      vector[4] = True
+    elif reserva.dia == 'Sex':
+      vector[5] = True
+    elif reserva.dia == 'Sab':
+      vector[6] = True
+  return vector
