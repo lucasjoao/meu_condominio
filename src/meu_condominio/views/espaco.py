@@ -29,7 +29,7 @@ def esp_res(request):
       c = Condominio.objects.get(pk=a.condominio)
       existe_res = Reserva.objects.filter(dia=dia).filter(turno=turno).filter(condominio__pk=c.pk).exists()
       if form.is_valid and not existe_res:
-        r = Reserva(condominio=c, dia=dia, turno=turno, user=request.user)
+        r = Reserva(condominio=c, dia=dia, turno=turno, apartamento=a)
         r.save()
 
         return HttpResponseRedirect(reverse('mc-espacos'))

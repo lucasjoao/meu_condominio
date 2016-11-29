@@ -92,7 +92,7 @@ class Reserva(models.Model):
   condominio = models.ForeignKey(Condominio, on_delete=models.CASCADE)
   dia = models.CharField(max_length=3)
   turno = models.CharField(max_length=5)
-  user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+  apartamento = models.ForeignKey(Apartamento, on_delete=models.CASCADE)
 
   def __str__(self):
     return self.dia + self.turno
